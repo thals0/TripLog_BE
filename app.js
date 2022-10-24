@@ -7,26 +7,12 @@ require('dotenv').config();
 
 const PORT = process.env.PORT;
 
-/* express-session */
-const session = require('express-session');
+// /* passport */
+// const passport = require('passport');
 
-/* passport */
-const passport = require('passport');
-
-app.use(
-    session({
-        secret: 'JUNU',
-        resave: false,
-        saveUninitialized: true,
-        cookie: {
-            maxAge: 1000 * 60 * 60,
-        },
-    })
-);
-
-/* passport session */
-app.use(passport.initialize());
-app.use(passport.session());
+// /* passport session */
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -35,7 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 const cors = require('cors');
 app.use(cors());
 
-const router = require('./routes/test');
+const router = require('./routes/userRouter');
 app.use('/', router);
 
 /* 오류발생 */
@@ -49,4 +35,3 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
       console.log(`해당 포트는 ${PORT}에서 작동중 입니다.`);
 });
-    
