@@ -5,9 +5,9 @@ const router = express.Router();
 const mongoDB = require('../controlloers/user');
 
 router.get('/', async (req, res) => {
-  const data = await mongoDB.getUsers();
+  const data = await mongoDB.getUser();
 
-  res.send(data);
+  res.send (JSON.stringify(data));
 });
 
 module.exports = router;

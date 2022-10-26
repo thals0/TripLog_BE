@@ -21,8 +21,17 @@ app.use(express.urlencoded({ extended: false }));
 const cors = require('cors');
 app.use(cors());
 
-const router = require('./routes/userRouter');
-app.use('/', router);
+/* plan */
+const planRouter = require('./routes/planRouter');
+app.use('/plan', planRouter);
+
+/* review */
+const reviewRouter = require('./routes/reviewRouter');
+app.use('/review', reviewRouter);
+
+/* charge */
+const chargeRouter = require('./routes/chargeRouter');
+app.use('/charge', chargeRouter);
 
 /* 오류발생 */
 app.use((err, req, res, next) => {

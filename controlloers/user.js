@@ -4,7 +4,7 @@ const mongoClient = require('../mongo');
 const _client = mongoClient.connect();
 
 const usersDB = {
-  getUsers: async () => {
+  getUser: async () => {
     const client = await _client;
     const db = client.db('triplog').collection('users');
     const data = await db.find({}).toArray();
