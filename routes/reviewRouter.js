@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const mongoDB = require('../controlloers/review');
+const mongoDB = require('../controllers/review');
 
 // 리뷰 요청(GET)
 router.get('/', async (req, res) => {

@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const mongoDB = require('../controlloers/plan');
+const mongoDB = require('../controllers/plan');
 
 router.post('/', async (req, res) => {
   const data = await mongoDB.savePlan(req.body);

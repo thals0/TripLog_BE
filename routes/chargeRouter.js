@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const mongoDB = require('../controlloers/charge');
+const mongoDB = require('../controllers/charge');
 
 // 금액 요청(GET)
 router.get('/', async (req, res) => {

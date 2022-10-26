@@ -48,12 +48,12 @@ const chargeRouter = require('./routes/chargeRouter');
 app.use('/charge', chargeRouter);
 
 // const main = require('./routes');
-const users = require('./routes/users');
+// const users = require('./routes/users');
 const checklist = require('./routes/checklist');
 const items = require('./routes/item');
 
 // app.use('/', main);
-app.use('/users', users);
+// app.use('/users', users);
 app.use('/checklist', checklist);
 app.use('/items', items);
 
