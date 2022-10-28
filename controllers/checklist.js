@@ -39,14 +39,14 @@ const checkDB = {
     const result = await db.updateOne(
       { userId: 'test' },
       {
-        $set: {
-          items,
+        $addToSet: {
+          items: item,
         },
-      },
-      { upsert: true }
+      }
+      // { upsert: true }
     );
     if (result.acknowledged) {
-      return items;
+      return item;
     } else {
       throw new Error('통신 이상');
     }
@@ -69,12 +69,12 @@ const checkDB = {
     const client = await _client;
     const db = client.db('triplog').collection('checklist');
     const result = await db.updateOne(
-      { userId: 'test' },
+      { userId: el.userId },
       // {
       //   items: { $elemMatch: { item: 'el.item' } },
       // },
       // { $unset: { item: 'el.item', checked: el.checked } }
-      { $pull: { items: { item: 'el.item', checked: el.checked } } }
+      { $pull: { items: { item: el.item } } }
     );
     if (result.acknowledged) {
       return '삭제 되었습니다.';
