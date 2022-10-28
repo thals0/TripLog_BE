@@ -9,6 +9,7 @@ const reviewDB = {
   getReview: async (contentId) => {
     const client = await _client;
     const db = client.db('triplog').collection('reviews');
+    
     const data = await db
       .find({
         review: {

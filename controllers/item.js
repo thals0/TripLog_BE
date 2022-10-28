@@ -2,40 +2,23 @@ const mongoClient = require('../routes/mongo');
 
 const _client = mongoClient.connect();
 
-// const initState = {
-//   contentid: '1860239',
-//   counts: 0,
-//   likes: 0,
-// };
-
-// const viewsInit = {
-//   contentid: '1860239',
-//   views: 0,
-//   userId: 'thals',
-// };
-
-// const likesInit = {
-//   contentid: '1860239',
-//   likes: 0,
-//   userId: 'thals',
-// };
-
 const initState = { _id: 3, contentid: '1860239', view: 0, like: 0 };
 // likes -> 유저 컬랙션에서 받아오기
 
 const checkDB = {
-  // 초기 데이터 설정
-  setData: async () => {
-    const client = await _client;
-    const db = client.db('triplog').collection('item');
-    const result = await db.insertOne(initState);
-    if (result.acknowledged) {
-      return '업데이트 성공';
-    } else {
-      throw new Error('통신 이상');
-    }
-  },
   // 데이터 가져오기
+  // getData: async (contentId) => {
+  //   const client = await _client;
+  //   const db = client.db('triplog').collection('item');
+  //   const data = await db
+  //     .find({
+  //       contentId: contentId.toString(),
+  //     })
+  //     .toArray();
+  //   return data;
+  // },
+
+  // 조회수 +1
   getData: async (contentId) => {
     const client = await _client;
     const db = client.db('triplog').collection('item');
