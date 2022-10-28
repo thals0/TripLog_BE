@@ -9,6 +9,9 @@ const PORT = process.env.PORT;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+// 이미지 저장 위치
+app.use(express.static('public'));
+app.use('/uploads', express.static('uploads'));
 
 /* 사용안함
 // express-session
@@ -38,7 +41,6 @@ const cors = require('cors');
 app.use(cors());
 
 /* routes */
-
 // plan
 const planRouter = require('./routes/planRouter');
 app.use('/plan', planRouter);
@@ -58,6 +60,10 @@ app.use('/checklist', checklist);
 // detail
 const detail = require('./routes/detailRouter');
 app.use('/detail', detail);
+
+// user
+const user = require('./routes/userRouter');
+app.use('/user', user);
 
 /* 오류발생 */
 app.use((err, req, res, next) => {
