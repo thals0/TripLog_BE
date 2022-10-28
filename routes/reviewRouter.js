@@ -43,8 +43,6 @@ router.post('/write', async (req, res) => {
 router.post('/img', upload.single('img'), async (req, res) => {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir);
   res.send(JSON.stringify(req.file.filename));
-  // const data = await mongoDB.saveReview(req.body);
-  // res.send(JSON.stringify(data));
 });
 
 // 리뷰 수정(GET)
