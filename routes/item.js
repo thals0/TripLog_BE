@@ -12,8 +12,10 @@ router.post('/setdata', async (req, res) => {
 
 // getData
 router.get('/:contentId', async (req, res) => {
-  req.params.contentId = parseInt(req.params.contentId);
-  const data = await mongoDB.incViews(res.params.contentId);
+  // req.params.contentId = parseInt(req.params.contentId);
+  // const data = await mongoDB.incViews(res.params.contentId);
+  contentId = req.params.contentId;
+  const data = await mongoDB.incViews(contentId);
   res.send(JSON.stringify(data));
 });
 

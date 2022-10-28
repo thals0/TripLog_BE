@@ -50,13 +50,18 @@ const checkDB = {
   incViews: async (contentId) => {
     const client = await _client;
     const db = client.db('triplog').collection('item');
+    const findResult = await db.findOne({ contentId: contentId });
     console.log(contentId);
-    const findResult = await db.findOne({ contentId });
     if (findResult) {
       const result = await db.updateOne(
-        { contentId: '1860239' },
+        { contentId: contentId },
         { $inc: { view: +1 } }
       );
+      if (result.acknowledged) {
+        return '조회수 + 1';
+      } else {
+        throw new Error('통신 이상');
+      }
     } else {
       const insertRes = await db.insertOne({
         // contentId: contentId,
@@ -65,16 +70,10 @@ const checkDB = {
         like: 0,
       });
       if (insertRes.acknowledged) {
-        return 'ㅇㅇ';
+        return 'insert contentId';
       } else {
         throw new Error('통신 이상');
       }
-    }
-
-    if (result.acknowledged) {
-      return '조회수 + 1';
-    } else {
-      throw new Error('통신 이상');
     }
   },
   // 좋아요 +1
