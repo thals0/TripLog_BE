@@ -9,6 +9,7 @@ const PORT = process.env.PORT;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
 // 이미지 저장 위치
 app.use(express.static('public'));
 app.use('/uploads', express.static('uploads'));

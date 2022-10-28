@@ -43,7 +43,6 @@ const reviewDB = {
       dateFull,
       view: 0,
       star: 0,
-      img: req.file ? req.file.filename : null,
     };
     const plan = await db.insertOne(saveReview);
 

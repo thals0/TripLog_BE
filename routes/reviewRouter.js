@@ -12,10 +12,10 @@ const dir = './uploads';
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-      cb(null, dir);
+    cb(null, dir);
   },
   filename: function (req, file, cb) {
-      cb(null, file.fieldname + '_' + Date.now());
+    cb(null, file.fieldname + '_' + Date.now());
   },
 });
 
@@ -34,11 +34,17 @@ router.get('/:contentId', async (req, res) => {
 });
 
 // 리뷰 작성(POST)
-router.post('/write', upload.single('img') ,async (req, res) => {
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir);
-  console.log(req.file);
+router.post('/write', async (req, res) => {
   const data = await mongoDB.saveReview(req.body);
   res.send(JSON.stringify(data));
+});
+
+// 리뷰 작성 IMG (POST)
+router.post('/img', upload.single('img'), async (req, res) => {
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir);
+  res.send(JSON.stringify(req.file.filename));
+  // const data = await mongoDB.saveReview(req.body);
+  // res.send(JSON.stringify(data));
 });
 
 // 리뷰 수정(GET)
