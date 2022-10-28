@@ -15,33 +15,34 @@ const chargeDB = {
   // 금액 만들기(POST)
   postCharge: async () => {
     const client = await _client;
-    const db = client.db('triplog').collection('charge');
-    const charge = await db.insertOne();
-    if(charge.acknowledged) {
+    const db = client.db('triplog').collection('charge').chargeList;
+    const charge = await db.insertOne({});
+    if (charge.acknowledged) {
       return true;
     } else {
-      throw new Error ('통신이상');
-    };
+      throw new Error('통신이상');
+    }
   },
 
   // 금액 업데이트(POST)
   saveCharge: async (chargeList) => {
     const client = await _client;
     const db = client.db('triplog').collection('charge');
+    console.log(chargeList);
     const charge = await db.updateOne(
       { user: 'test' },
       {
         $set: {
-          chargeList
+          chargeList: chargeList,
         },
       }
     );
 
-    if(charge.acknowledged) {
+    if (charge.acknowledged) {
       return true;
     } else {
-      throw new Error ('통신이상');
-    };
+      throw new Error('통신이상');
+    }
   },
 };
 

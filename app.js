@@ -47,6 +47,10 @@ app.use('/review', reviewRouter);
 const chargeRouter = require('./routes/chargeRouter');
 app.use('/charge', chargeRouter);
 
+/* charge */
+const itemRouter = require('./routes/itemRouter');
+app.use('/item', itemRouter);
+
 // const main = require('./routes');
 // const users = require('./routes/users');
 const checklist = require('./routes/checklist');

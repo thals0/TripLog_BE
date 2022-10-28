@@ -6,7 +6,6 @@ const mongoDB = require('../controllers/plan');
 
 router.post('/', async (req, res) => {
   const data = await mongoDB.savePlan(req.body);
-
   res.send(JSON.stringify(data));
 });
 
