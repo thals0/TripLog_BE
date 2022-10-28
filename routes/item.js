@@ -13,15 +13,16 @@ router.post('/setdata', async (req, res) => {
 // getData
 router.get('/:contentId', async (req, res) => {
   req.params.contentId = parseInt(req.params.contentId);
-  const data = await mongoDB.getData();
+  const data = await mongoDB.incViews(res.params.contentId);
   res.send(JSON.stringify(data));
 });
 
 // 조회수 + 1
-router.post('/incview', async (req, res) => {
-  const msg = await mongoDB.incViews();
-  res.send(msg);
-});
+// router.post('/incview/:contentId', async (req, res) => {
+//   req.params.contentId = parseInt(req.params.contentId);
+//   const msg = await mongoDB.incViews(res.params.contentId);
+//   res.send(msg);
+// });
 
 // 좋아요 + 1
 router.post('/inclike', async (req, res) => {

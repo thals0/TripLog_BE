@@ -47,13 +47,30 @@ const checkDB = {
     return data;
   },
   // 조회수 +1
-  incViews: async () => {
+  incViews: async (contentId) => {
     const client = await _client;
     const db = client.db('triplog').collection('item');
-    const result = await db.updateOne(
-      { contentId: '1860239' },
-      { $inc: { view: +1 } }
-    );
+    console.log(contentId);
+    const findResult = await db.findOne({ contentId });
+    if (findResult) {
+      const result = await db.updateOne(
+        { contentId: '1860239' },
+        { $inc: { view: +1 } }
+      );
+    } else {
+      const insertRes = await db.insertOne({
+        // contentId: contentId,
+        contentId,
+        view: 1,
+        like: 0,
+      });
+      if (insertRes.acknowledged) {
+        return 'ㅇㅇ';
+      } else {
+        throw new Error('통신 이상');
+      }
+    }
+
     if (result.acknowledged) {
       return '조회수 + 1';
     } else {
