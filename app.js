@@ -50,12 +50,12 @@ app.use('/charge', chargeRouter);
 // const main = require('./routes');
 // const users = require('./routes/users');
 const checklist = require('./routes/checklist');
-const items = require('./routes/item');
+const item = require('./routes/item');
 
 // app.use('/', main);
 // app.use('/users', users);
 app.use('/checklist', checklist);
-app.use('/items', items);
+app.use('/item', item);
 
 /* 오류발생 */
 app.use((err, req, res, next) => {

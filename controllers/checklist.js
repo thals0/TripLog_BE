@@ -4,7 +4,7 @@ const _client = mongoClient.connect();
 
 const initState = {
   userId: 'test',
-  item: [
+  items: [
     { item: '0', checked: false },
     { item: '1', checked: false },
     { item: '2', checked: false },
@@ -33,12 +33,20 @@ const checkDB = {
     return data;
   },
   // item 추가
-  addItem: async (req) => {
+  addItem: async (item) => {
     const client = await _client;
     const db = client.db('triplog').collection('checklist');
-    const result = await db.insertOne(req);
+    const result = await db.updateOne(
+      { userId: 'test' },
+      {
+        $set: {
+          items,
+        },
+      },
+      { upsert: true }
+    );
     if (result.acknowledged) {
-      return req;
+      return items;
     } else {
       throw new Error('통신 이상');
     }
@@ -60,9 +68,16 @@ const checkDB = {
   deleteItem: async (el) => {
     const client = await _client;
     const db = client.db('triplog').collection('checklist');
-    const result = await db.deleteOne({ _id: el._id });
+    const result = await db.updateOne(
+      { userId: 'test' },
+      // {
+      //   items: { $elemMatch: { item: 'el.item' } },
+      // },
+      // { $unset: { item: 'el.item', checked: el.checked } }
+      { $pull: { items: { item: 'el.item', checked: el.checked } } }
+    );
     if (result.acknowledged) {
-      return _id;
+      return '삭제 되었습니다.';
     } else {
       throw new Error('통신 이상');
     }
