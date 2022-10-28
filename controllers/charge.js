@@ -1,4 +1,4 @@
-const mongoClient = require('../mongo');
+const mongoClient = require('../routes/mongo');
 
 // _여러번 실행되는 걸 막음
 const _client = mongoClient.connect();

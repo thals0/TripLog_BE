@@ -10,15 +10,16 @@ const PORT = process.env.PORT;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-/* express-session */
+/* 사용안함
+// express-session
 const session = require('express-session');
 
-/* passport */
+// passport
 const passport = require('passport');
 
 app.use(
   session({
-    secret: 'thals',
+    secret: 'triplog',
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -27,39 +28,36 @@ app.use(
   })
 );
 
-/* passport session */
+// passport session 
 app.use(passport.initialize());
 app.use(passport.session());
+/*
 
 /* cors */
 const cors = require('cors');
 app.use(cors());
 
-/* plan */
+/* routes */
+
+// plan
 const planRouter = require('./routes/planRouter');
 app.use('/plan', planRouter);
 
-/* review */
+// review
 const reviewRouter = require('./routes/reviewRouter');
 app.use('/review', reviewRouter);
 
-/* charge */
+// charge
 const chargeRouter = require('./routes/chargeRouter');
 app.use('/charge', chargeRouter);
 
-/* charge */
-// const itemRouter = require('./routes/itemRouter');
-// app.use('/item', itemRouter);
-
-// const main = require('./routes');
-// const users = require('./routes/users');
-const checklist = require('./routes/checklist');
-const item = require('./routes/item');
-
-// app.use('/', main);
-// app.use('/users', users);
+// checklist
+const checklist = require('./routes/checklistRouter');
 app.use('/checklist', checklist);
-app.use('/item', item);
+
+// detail
+const detail = require('./routes/detailRouter');
+app.use('/detail', detail);
 
 /* 오류발생 */
 app.use((err, req, res, next) => {
