@@ -36,10 +36,14 @@ const checkDB = {
     }
   },
   // 데이터 가져오기
-  getData: async () => {
+  getData: async (contentId) => {
     const client = await _client;
     const db = client.db('triplog').collection('item');
-    const data = await db.find({}).toArray();
+    const data = await db
+      .find({
+        contentId: contentId.toString(),
+      })
+      .toArray();
     return data;
   },
   // 조회수 +1

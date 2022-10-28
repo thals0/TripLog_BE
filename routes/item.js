@@ -11,9 +11,10 @@ router.post('/setdata', async (req, res) => {
 });
 
 // getData
-router.get('/', async (req, res) => {
+router.get('/:contentId', async (req, res) => {
+  req.params.contentId = parseInt(req.params.contentId);
   const data = await mongoDB.getData();
-  res.send(data);
+  res.send(JSON.stringify(data));
 });
 
 // 조회수 + 1
