@@ -8,14 +8,14 @@ const checkDB = {
     const client = await _client;
     const db = client.db('triplog').collection('detail');
     const findResult = await db.findOne({ contentId: contentId });
-    console.log(contentId);
+    // console.log(contentId);
     if (findResult) {
       const result = await db.updateOne(
         { contentId: contentId },
         { $inc: { view: +1 } }
       );
       if (result.acknowledged) {
-        return '조회수 + 1';
+        return findResult;
       } else {
         throw new Error('통신 이상');
       }
@@ -26,7 +26,7 @@ const checkDB = {
         like: 0,
       });
       if (insertRes.acknowledged) {
-        return 'insert contentId';
+        return insertRes;
       } else {
         throw new Error('통신 이상');
       }
