@@ -27,6 +27,27 @@ const verifyPassword = (password, salt, userPassword) => {
 };
 
 const usersDB = {
+  // 사용자의 좋아요 항목 가져오기
+  getLikes: async (contentId) => {
+    const client = await _client;
+    const db = client.db('triplog').collection('users');
+    const data = await db.find({}).toArray();
+    return data;
+  },
+  // 좋아요 아이템 추가
+  arrLike: async (like) => {
+    const client = await _client;
+    const db = client.db('triplog').collection('users');
+    const result = await db.updateOne(
+      { nickName: 'qq' },
+      { $set: { likes: like } }
+    );
+    if (result.acknowledged) {
+      return like;
+    } else {
+      throw new Error('통신 이상');
+    }
+  },
   // 회원 가입 모듈
   register: async (registerInfo) => {
     console.log('!!!!', registerInfo);
