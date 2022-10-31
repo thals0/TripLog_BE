@@ -27,6 +27,62 @@ const verifyPassword = (password, salt, userPassword) => {
 };
 
 const usersDB = {
+  // 사용자의 좋아요 항목 가져오기
+  getLikes: async (contentId) => {
+    const client = await _client;
+    const db = client.db('triplog').collection('users');
+    const data = await db.find({}).toArray();
+    return data;
+  },
+  // 좋아요 아이템 추가
+  arrLike: async (like) => {
+    const client = await _client;
+    const db = client.db('triplog').collection('users');
+    const result = await db.updateOne(
+      { nickName: 'qq' },
+      { $set: { likes: like } }
+    );
+    if (result.acknowledged) {
+      return like;
+    } else {
+      throw new Error('통신 이상');
+    }
+  },
+  // 아이디 중복확인
+  idCheck: async (registerId) => {
+    console.log(registerId);
+    const client = await _client;
+    const db = client.db('triplog').collection('users');
+    const idCheck = await db.findOne({ email: registerId.email });
+
+    if (idCheck === null) {
+      return {
+        idCheck: true
+      }
+    } else {
+      return {
+        idCheck: false
+      }
+    }
+  },
+  // 닉네임 중복확인
+  nameCheck: async (registerName) => {
+    console.log(registerName);
+    const client = await _client;
+    const db = client.db('triplog').collection('users');
+    const nameCheck = await db.findOne({ email: registerName.nickName });
+
+    if (nameCheck === null) {
+      return {
+        nameCheck: true
+      }
+    } else {
+      return {
+        nameCheck: false
+      }
+    }
+  },
+
   // 회원 가입 모듈
   register: async (registerInfo) => {
     console.log('!!!!', registerInfo);
@@ -51,6 +107,7 @@ const usersDB = {
           nickName: registerInfo.nickName,
           password: hash.hashedPassword,
           salt: hash.salt,
+          likes: [],
         };
         console.log('@', registerUser);
       } else {
@@ -77,6 +134,7 @@ const usersDB = {
   },
   // 로그인 모듈
   login: async (loginInfo) => {
+    console.log(loginInfo)
     const client = await _client;
     const db = client.db('triplog').collection('users');
     // 로그인 시 입력한 email 정보가 db 에 있는지 체크
