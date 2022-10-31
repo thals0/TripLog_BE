@@ -11,12 +11,7 @@ const reviewDB = {
     const db = client.db('triplog').collection('reviews');
 
     const data = await db
-      .find({
-        review: {
-          // 받아온 인자 전달
-          $elemMatch: { contentId: contentId.toString() },
-        },
-      })
+      .find({ contentId: contentId.toString() })
       .sort({ _id: -1 })
       .toArray();
     return data;
@@ -28,6 +23,10 @@ const reviewDB = {
     const client = await _client;
     const db = client.db('triplog').collection('reviews');
 
+    const contentId = review[0].contentId;
+    const content = review[0].content;
+    const nickName = review[0].nickName;
+    const star = review[0].star;
     const today = new Date();
     const year = today.getFullYear();
     const month = ('0' + (today.getMonth() + 1)).slice(-2);
@@ -38,7 +37,10 @@ const reviewDB = {
       year + '.' + month + '.' + day + ' ' + hours + ':' + minutes;
 
     const saveReview = {
-      review,
+      contentId,
+      nickName,
+      content,
+      star,
       dateFull,
     };
     const plan = await db.insertOne(saveReview);
@@ -60,14 +62,14 @@ const reviewDB = {
 
   // 리뷰 수정(POST)
   postEmendReview: async (emendData) => {
+    console.log('!!',emendData[0].emendContent);
     const client = await _client;
     const db = client.db('triplog').collection('reviews');
     const data = await db.updateOne(
-      { _id: ObjectId(emendData[0].emendId), 'review.title': '12' },
+      { _id: ObjectId(emendData[0].emendId), nickName: 'qq' },
       {
         $set: {
-          'review.$.title': emendData[0].emendTitle,
-          'review.$.content': emendData[0].emendContent,
+          content: emendData[0].emendContent,
         },
       }
     );
