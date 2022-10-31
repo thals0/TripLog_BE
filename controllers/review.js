@@ -9,7 +9,7 @@ const reviewDB = {
   getReview: async (contentId) => {
     const client = await _client;
     const db = client.db('triplog').collection('reviews');
-    
+
     const data = await db
       .find({
         review: {
@@ -17,6 +17,7 @@ const reviewDB = {
           $elemMatch: { contentId: contentId.toString() },
         },
       })
+      .sort({ _id: -1 })
       .toArray();
     return data;
   },
@@ -33,16 +34,12 @@ const reviewDB = {
     const day = ('0' + today.getDate()).slice(-2);
     const hours = ('0' + today.getHours()).slice(-2);
     const minutes = ('0' + today.getMinutes()).slice(-2);
-    const time = hours + ':' + minutes;
     const dateFull =
       year + '.' + month + '.' + day + ' ' + hours + ':' + minutes;
 
     const saveReview = {
       review,
-      time,
       dateFull,
-      view: 0,
-      star: 0,
     };
     const plan = await db.insertOne(saveReview);
 
