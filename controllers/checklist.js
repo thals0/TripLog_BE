@@ -50,10 +50,11 @@ const checkDB = {
     }
   },
   // item 불러오기
-  getItem: async () => {
+  getItem: async ({ nickName }) => {
+    // console.log(nickName);
     const client = await _client;
     const db = client.db('triplog').collection('checklist');
-    const data = await db.find({}).toArray();
+    const data = await db.findOne({ userId: nickName });
     return data;
   },
   // item 추가

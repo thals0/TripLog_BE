@@ -82,6 +82,7 @@ const usersDB = {
       }
     }
   },
+
   // 회원 가입 모듈
   register: async (registerInfo) => {
     console.log('!!!!', registerInfo);
