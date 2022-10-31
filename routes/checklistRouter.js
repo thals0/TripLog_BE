@@ -11,8 +11,9 @@ router.post('/setData', async (req, res) => {
 });
 
 // item 불러오기
-router.get('/', async (req, res) => {
-  const data = await mongoDB.getItem();
+router.post('/', async (req, res) => {
+  const data = await mongoDB.getItem(req.body);
+  // console.log(req.body);
   res.send(data);
 });
 
@@ -31,7 +32,7 @@ router.post('/checked', async (req, res) => {
 // item 삭제
 router.delete('/deleteItem', async (req, res) => {
   const data = await mongoDB.deleteItem(req.body);
-  console.log(req.body);
+  // console.log(req.body);
   res.send(data);
 });
 
