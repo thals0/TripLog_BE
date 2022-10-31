@@ -48,6 +48,40 @@ const usersDB = {
       throw new Error('통신 이상');
     }
   },
+  // 아이디 중복확인
+  idCheck: async (registerId) => {
+    console.log(registerId);
+    const client = await _client;
+    const db = client.db('triplog').collection('users');
+    const idCheck = await db.findOne({ email: registerId.email });
+
+    if (idCheck === null) {
+      return {
+        idCheck: true
+      }
+    } else {
+      return {
+        idCheck: false
+      }
+    }
+  },
+  // 닉네임 중복확인
+  nameCheck: async (registerName) => {
+    console.log(registerName);
+    const client = await _client;
+    const db = client.db('triplog').collection('users');
+    const nameCheck = await db.findOne({ email: registerName.nickName });
+
+    if (nameCheck === null) {
+      return {
+        nameCheck: true
+      }
+    } else {
+      return {
+        nameCheck: false
+      }
+    }
+  },
   // 회원 가입 모듈
   register: async (registerInfo) => {
     console.log('!!!!', registerInfo);
@@ -72,6 +106,7 @@ const usersDB = {
           nickName: registerInfo.nickName,
           password: hash.hashedPassword,
           salt: hash.salt,
+          likes: [],
         };
         console.log('@', registerUser);
       } else {
@@ -98,6 +133,7 @@ const usersDB = {
   },
   // 로그인 모듈
   login: async (loginInfo) => {
+    console.log(loginInfo)
     const client = await _client;
     const db = client.db('triplog').collection('users');
     // 로그인 시 입력한 email 정보가 db 에 있는지 체크
