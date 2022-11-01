@@ -4,14 +4,9 @@ const router = express.Router();
 
 const mongoDB = require('../controllers/user');
 
-router.get('/getlikes', async (req, res) => {
-  const data = await mongoDB.getLikes();
+router.post('/', async (req, res) => {
+  const data = await mongoDB.getUser(req.body);
   res.send(data);
-});
-
-router.post('/arrlike', async (req, res) => {
-  const data = await mongoDB.arrLike(req.body);
-  res.send(JSON.stringify(data));
 });
 
 // 회원가입 아이디 중복확인
