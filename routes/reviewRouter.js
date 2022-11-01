@@ -26,6 +26,11 @@ const limits = {
 const upload = multer({ storage, limits });
 
 // 리뷰 요청(GET)
+router.post('/', async (req, res) => {
+  const data = await mongoDB.getUserReview(req.body);
+  res.send(data);
+});
+
 router.get('/:contentId', async (req, res) => {
   req.params.contentId = parseInt(req.params.contentId);
   // 여기서 getRiview 메소드를 호출 할 때 getReivew() 의 인자로 req.params.contentsId 를 넘겨주기
@@ -53,7 +58,7 @@ router.get('/emend/:_id', async (req, res) => {
 
 // 리뷰 수정(POST)
 router.post('/emend/:_id', async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   const data = await mongoDB.postEmendReview(req.body);
   res.send(JSON.stringify(data));
 });
