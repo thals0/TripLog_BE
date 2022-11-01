@@ -27,27 +27,14 @@ const verifyPassword = (password, salt, userPassword) => {
 };
 
 const usersDB = {
-  // 사용자의 좋아요 항목 가져오기
-  getLikes: async (contentId) => {
+  // get data
+  getUser: async ({ nickName }) => {
     const client = await _client;
     const db = client.db('triplog').collection('users');
-    const data = await db.find({}).toArray();
+    const data = await db.findOne({ nickName: nickName });
     return data;
   },
-  // 좋아요 아이템 추가
-  arrLike: async (like) => {
-    const client = await _client;
-    const db = client.db('triplog').collection('users');
-    const result = await db.updateOne(
-      { nickName: 'qq' },
-      { $set: { likes: like } }
-    );
-    if (result.acknowledged) {
-      return like;
-    } else {
-      throw new Error('통신 이상');
-    }
-  },
+
   // 아이디 중복확인
   idCheck: async (registerId) => {
     console.log(registerId);
@@ -57,12 +44,12 @@ const usersDB = {
 
     if (idCheck === null) {
       return {
-        idCheck: true
-      }
+        idCheck: true,
+      };
     } else {
       return {
-        idCheck: false
-      }
+        idCheck: false,
+      };
     }
   },
   // 닉네임 중복확인
@@ -74,12 +61,12 @@ const usersDB = {
 
     if (nameCheck === null) {
       return {
-        nameCheck: true
-      }
+        nameCheck: true,
+      };
     } else {
       return {
-        nameCheck: false
-      }
+        nameCheck: false,
+      };
     }
   },
 
@@ -134,7 +121,7 @@ const usersDB = {
   },
   // 로그인 모듈
   login: async (loginInfo) => {
-    console.log(loginInfo)
+    console.log(loginInfo);
     const client = await _client;
     const db = client.db('triplog').collection('users');
     // 로그인 시 입력한 email 정보가 db 에 있는지 체크
