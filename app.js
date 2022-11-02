@@ -66,6 +66,10 @@ app.use('/detail', detail);
 const user = require('./routes/userRouter');
 app.use('/user', user);
 
+// like
+const like = require('./routes/likeRouter');
+app.use('/like', like);
+
 /* 오류발생 */
 app.use((err, req, res, next) => {
   console.log(err.stack);
