@@ -3,7 +3,7 @@ const mongoClient = require('../routes/mongo');
 const _client = mongoClient.connect();
 
 const initState = {
-  userId: 'test',
+  nickName: 'test',
   checked: [],
   items: [
     {
@@ -52,9 +52,10 @@ const checkDB = {
   // item 불러오기
   getItem: async ({ nickName }) => {
     // console.log(nickName);
+
     const client = await _client;
     const db = client.db('triplog').collection('checklist');
-    const data = await db.findOne({ userId: nickName });
+    const data = await db.findOne({ nickName: nickName });
     return data;
   },
   // item 추가
@@ -62,7 +63,7 @@ const checkDB = {
     const client = await _client;
     const db = client.db('triplog').collection('checklist');
     const result = await db.updateOne(
-      { userId: 'test', 'items.title': item.title },
+      { nickName: 'test', 'items.title': item.title },
       {
         $addToSet: {
           'items.$.content': item.item,
@@ -81,7 +82,7 @@ const checkDB = {
     const client = await _client;
     const db = client.db('triplog').collection('checklist');
     const result = await db.updateOne(
-      { userId: el.userId },
+      { nickName: el.nickName },
       { $set: { checked: el.checked } }
     );
     if (result.acknowledged) {
@@ -94,7 +95,7 @@ const checkDB = {
     const client = await _client;
     const db = client.db('triplog').collection('checklist');
     const result = await db.updateOne(
-      { userId: el.userId, 'items.title': el.title },
+      { nickName: el.nickName, 'items.title': el.title },
       // {
       //   items: { $elemMatch: { item: 'el.item' } },
       // },
