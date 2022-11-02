@@ -4,6 +4,12 @@ const router = express.Router();
 
 const mongoDB = require('../controllers/detail');
 
+// get all data
+router.get('/', async (req, res) => {
+  const data = await mongoDB.getAlldata();
+  res.send(data);
+});
+
 // getData
 router.get('/:contentId', async (req, res) => {
   contentId = req.params.contentId;

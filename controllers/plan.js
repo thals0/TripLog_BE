@@ -26,6 +26,7 @@ const initState = {
 };
 
 const planDB = {
+  // 여행 저장
   savePlan: async (list) => {
     const client = await _client;
     const db = client.db('triplog').collection('plans');
@@ -35,6 +36,14 @@ const planDB = {
     } else {
       throw new Error('통신이상');
     }
+  },
+  // get plan
+  getPlan: async ({ userName }) => {
+    console.log(userName);
+    const client = await _client;
+    const db = client.db('triplog').collection('plans');
+    const data = await db.findOne({ 'state.user': userName });
+    return data;
   },
 };
 

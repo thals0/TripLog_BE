@@ -2,9 +2,14 @@ const mongoClient = require('../routes/mongo');
 
 const _client = mongoClient.connect();
 
+// const init = {
+//   userId: 'test',
+//   likes: [{ contentId: '126081', title: '한라산 (제주도 국가지질공원)' }],
+// };
+
 const init = {
   userId: 'test',
-  likes: ['123'],
+  likes: ['126081'],
 };
 
 const likeDB = {
