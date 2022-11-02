@@ -19,23 +19,23 @@ router.get('/', async (req, res) => {
 // getData
 router.post('/:contentId', async (req, res) => {
   contentId = req.params.contentId;
-  console.log(req.body);
-  const data = await mongoDB.getData(contentId);
+  // console.log(req.body);
+  const data = await mongoDB.getData(req.body);
   res.send(JSON.stringify(data));
 });
 
-// 좋아요 + 1
-// router.post('/inclike/:contentId', async (req, res) => {
-//   contentId = req.params.contentId;
-//   const msg = await mongoDB.incLike(contentId);
-//   res.send(msg);
-// });
+// 좋아요 + 1;
+router.post('/inclike/:contentId', async (req, res) => {
+  contentId = req.params.contentId;
+  const msg = await mongoDB.incLike(contentId);
+  res.send(msg);
+});
 
-// 좋아요 - 1
-// router.post('/deletelike/:contentId', async (req, res) => {
-//   contentId = req.params.contentId;
-//   const msg = await mongoDB.deleteLike(contentId);
-//   res.send(msg);
-// });
+// 좋아요 - 1;
+router.post('/deletelike/:contentId', async (req, res) => {
+  contentId = req.params.contentId;
+  const msg = await mongoDB.deleteLike(contentId);
+  res.send(msg);
+});
 
 module.exports = router;
