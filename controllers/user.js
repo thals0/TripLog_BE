@@ -57,12 +57,12 @@ const usersDB = {
 
     if (idCheck === null) {
       return {
-        idCheck: true
-      }
+        idCheck: true,
+      };
     } else {
       return {
-        idCheck: false
-      }
+        idCheck: false,
+      };
     }
   },
   // 닉네임 중복확인
@@ -74,12 +74,12 @@ const usersDB = {
 
     if (nameCheck === null) {
       return {
-        nameCheck: true
-      }
+        nameCheck: true,
+      };
     } else {
       return {
-        nameCheck: false
-      }
+        nameCheck: false,
+      };
     }
   },
 
@@ -134,7 +134,7 @@ const usersDB = {
   },
   // 로그인 모듈
   login: async (loginInfo) => {
-    console.log(loginInfo)
+    console.log(loginInfo);
     const client = await _client;
     const db = client.db('triplog').collection('users');
     // 로그인 시 입력한 email 정보가 db 에 있는지 체크
