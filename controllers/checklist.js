@@ -3,7 +3,6 @@ const mongoClient = require('../routes/mongo');
 const _client = mongoClient.connect();
 
 const initState = {
-  nickName: 'test',
   checked: [],
   items: [
     {
@@ -56,14 +55,27 @@ const checkDB = {
     const client = await _client;
     const db = client.db('triplog').collection('checklist');
     const data = await db.findOne({ nickName: nickName });
-    return data;
+    if (data === null) {
+      const insertRes = await db.insertOne({
+        nickName: nickName,
+        checked: initState.checked,
+        items: initState.items,
+      });
+      if (insertRes.acknowledged) {
+        return insertRes;
+      } else {
+        throw new Error('통신 이상');
+      }
+    } else {
+      return data;
+    }
   },
   // item 추가
   addItem: async (item) => {
     const client = await _client;
     const db = client.db('triplog').collection('checklist');
     const result = await db.updateOne(
-      { nickName: 'test', 'items.title': item.title },
+      { nickName: item.nickName, 'items.title': item.title },
       {
         $addToSet: {
           'items.$.content': item.item,
