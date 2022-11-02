@@ -14,6 +14,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'));
 app.use('/uploads', express.static('uploads'));
 
+// 쿠키 parser 로딩 후 app에 등록
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 /* 사용안함
 // express-session
 const session = require('express-session');

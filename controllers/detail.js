@@ -3,6 +3,12 @@ const mongoClient = require('../routes/mongo');
 const _client = mongoClient.connect();
 
 const checkDB = {
+  getAlldata: async () => {
+    const client = await _client;
+    const db = client.db('triplog').collection('detail');
+    const data = await db.find({}).toArray();
+    return data;
+  },
   // 조회수 +1
   getData: async (contentId) => {
     const client = await _client;
@@ -32,6 +38,7 @@ const checkDB = {
       }
     }
   },
+
   // 좋아요 +1
   incLike: async (contentId) => {
     const client = await _client;
