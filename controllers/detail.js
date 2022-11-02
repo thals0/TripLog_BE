@@ -9,6 +9,23 @@ const checkDB = {
     const data = await db.find({}).toArray();
     return data;
   },
+
+  // getTourdata: async (tourData) => {
+  //   const client = await _client;
+  //   const db = client.db('triplog').collection('detail');
+  //   const find = await db.findOne({ contentId: tourData.contentId });
+  //   if (find === null) {
+  //     const insertRes = await db.insertOne({ tourData });
+  //     if (insertRes.acknowledged) {
+  //       return insertRes;
+  //     } else {
+  //       throw new Error('통신 이상');
+  //     }
+  //   } else {
+  //     return find;
+  //   }
+  // },
+
   // 조회수 +1
   getData: async (contentId) => {
     const client = await _client;
