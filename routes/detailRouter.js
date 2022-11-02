@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
 router.post('/:contentId', async (req, res) => {
   contentId = req.params.contentId;
   // console.log(req.body);
-  const data = await mongoDB.getData(req.body);
+  const data = await mongoDB.getData(req.body, contentId);
   res.send(JSON.stringify(data));
 });
 

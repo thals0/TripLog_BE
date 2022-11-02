@@ -28,15 +28,16 @@ const checkDB = {
 
   // 조회수 +1
   getData: async ({ data }) => {
+    // console.log('@@@@@@@@@@@', data);
     const client = await _client;
     const db = client.db('triplog').collection('detail');
     const findResult = await db.findOne({
-      'data.contentId': data.contentId,
+      'data.contentid': data.contentId,
     });
     console.log(findResult);
     if (findResult) {
       const result = await db.updateOne(
-        { 'data.contentId': data.contentId },
+        { 'data.contentid': data.contentId },
         { $inc: { view: +1 } }
       );
       if (result.acknowledged) {
@@ -64,7 +65,7 @@ const checkDB = {
     const client = await _client;
     const db = client.db('triplog').collection('detail');
     const result = await db.updateOne(
-      { contentId: contentId },
+      { 'data.contentid': contentId },
       { $inc: { like: +1 } }
     );
     if (result.acknowledged) {
@@ -78,7 +79,7 @@ const checkDB = {
     const client = await _client;
     const db = client.db('triplog').collection('detail');
     const result = await db.updateOne(
-      { contentId: contentId },
+      { 'data.contentid': contentId },
       { $inc: { like: -1 } }
     );
     if (result.acknowledged) {
