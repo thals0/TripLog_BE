@@ -26,7 +26,6 @@ const reviewDB = {
 
   // 리뷰 작성(POST)
   saveReview: async (review) => {
-    console.log(review);
     const client = await _client;
     const db = client.db('triplog').collection('reviews');
 
@@ -34,6 +33,7 @@ const reviewDB = {
     const content = review[0].content;
     const nickName = review[0].nickName;
     const star = review[0].star;
+    const img = review[0].img;
     const today = new Date();
     const year = today.getFullYear();
     const month = ('0' + (today.getMonth() + 1)).slice(-2);
@@ -49,6 +49,7 @@ const reviewDB = {
       content,
       star,
       dateFull,
+      img,
     };
     const plan = await db.insertOne(saveReview);
 
@@ -69,14 +70,17 @@ const reviewDB = {
 
   // 리뷰 수정(POST)
   postEmendReview: async (emendData) => {
-    console.log('!!', emendData[0].emendContent);
+    const contentId = emendData[0].emendId;
+    const content = emendData[0].emendContent;
+    const nickName = emendData[0].nickName;
+
     const client = await _client;
     const db = client.db('triplog').collection('reviews');
     const data = await db.updateOne(
-      { _id: ObjectId(emendData[0].emendId), nickName: 'qq' },
+      { _id: ObjectId(contentId), nickName: nickName },
       {
         $set: {
-          content: emendData[0].emendContent,
+          content: content,
         },
       }
     );

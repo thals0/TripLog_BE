@@ -60,6 +60,25 @@ const chargeDB = {
       throw new Error('통신이상');
     }
   },
+
+  // 금액 초기화(POST)
+  deleteAll: async (data) => {
+    const client = await _client;
+    const db = client.db('triplog').collection('charge');
+    console.log(data);
+    const charge = await db.updateOne(
+      { nickName: data.nickName },
+      {
+        $set: { chargeList: [] },
+      },
+    );
+
+    if (charge.acknowledged) {
+      return true;
+    } else {
+      throw new Error('통신이상');
+    }
+  },
 };
 
 module.exports = chargeDB;

@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // 이미지 저장 위치
-app.use(express.static('public'));
+// app.use(express.static('public'));
 app.use('/uploads', express.static('uploads'));
 
 // 쿠키 parser 로딩 후 app에 등록
@@ -44,6 +44,9 @@ app.use(passport.session());
 /* cors */
 const cors = require('cors');
 app.use(cors());
+
+/* img */
+app.use('/uploads', express.static('uploads'));
 
 /* routes */
 // plan

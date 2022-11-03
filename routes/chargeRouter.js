@@ -22,4 +22,11 @@ router.post('/delete', async (req, res) => {
   res.send(JSON.stringify(data));
 });
 
+// 금액 전체삭제(POST)
+router.post('/alldelete', async (req, res) => {
+  console.log(req.body);
+  const data = await mongoDB.deleteAll(req.body);
+  res.send(JSON.stringify(data));
+});
+
 module.exports = router;
