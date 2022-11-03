@@ -156,6 +156,26 @@ const usersDB = {
       };
     }
   },
+
+  // 유저 이미지 업데이트(POST)
+  updateImg: async (user) => {
+    const client = await _client;
+    const db = client.db('triplog').collection('users');
+
+    const nickName = user[0].nickName;
+    const img = user[0].img;
+
+    const updataRes = await db.updateOne(
+      { nickName: nickName },
+      { $set: { img: img } }
+    );
+
+    if (updataRes.acknowledged) {
+      return true;
+    } else {
+      throw new Error('통신이상');
+    }
+  },
 };
 
 module.exports = usersDB;

@@ -4,9 +4,31 @@ const router = express.Router();
 
 const mongoDB = require('../controllers/user');
 
+const multer = require('multer');
+
+const fs = require('fs');
+
+const dir = './uploads';
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, dir);
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '_' + Date.now());
+  },
+});
+
+const limits = {
+  fileSize: 1024 * 1024 * 2,
+};
+
+const upload = multer({ storage, limits });
+
+// 유저정보 (POST)
 router.post('/', async (req, res) => {
   const data = await mongoDB.getUser(req.body);
-  res.send(data);
+  res.send(JSON.stringify(data));
 });
 
 // 회원가입 아이디 중복확인
@@ -37,6 +59,18 @@ router.post('/login', async (req, res) => {
   const loginInfo = req.body;
   const result = await mongoDB.login(loginInfo);
   res.send(JSON.stringify(result));
+});
+
+// 유저 IMG (POST)
+router.post('/img', upload.single('img'), async (req, res) => {
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir);
+  res.send(JSON.stringify(req.file.filename));
+});
+
+// 유저 IMG 업로드(POST)
+router.post('/upload', async (req, res) => {
+  const data = await mongoDB.updateImg(req.body);
+  res.send(JSON.stringify(data));
 });
 
 module.exports = router;
