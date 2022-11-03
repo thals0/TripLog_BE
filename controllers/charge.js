@@ -11,7 +11,10 @@ const chargeDB = {
     const find = await db.findOne({ nickName: nickName });
 
     if (find === null) {
-      const insertRes = await db.insertOne({ nickName: nickName });
+      const insertRes = await db.insertOne(
+        { nickName: nickName },
+        { chargeList: [] }
+      );
       if (insertRes.acknowledged) {
         return insertRes;
       } else {
@@ -51,7 +54,7 @@ const chargeDB = {
       { nickName: data.nickName },
       {
         $pull: { chargeList: { title: data.a.title } },
-      },
+      }
     );
 
     if (charge.acknowledged) {
@@ -70,7 +73,7 @@ const chargeDB = {
       { nickName: data.nickName },
       {
         $set: { chargeList: [] },
-      },
+      }
     );
 
     if (charge.acknowledged) {
