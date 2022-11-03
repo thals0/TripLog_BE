@@ -45,10 +45,10 @@ router.post('/write', async (req, res) => {
 });
 
 // 리뷰 작성 IMG (POST)
-// router.post('/img', upload.single('img'), async (req, res) => {
-//   if (!fs.existsSync(dir)) fs.mkdirSync(dir);
-//   res.send(JSON.stringify(req.file.filename));
-// });
+router.post('/img', upload.single('img'), async (req, res) => {
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir);
+  res.send(JSON.stringify(req.file.filename));
+});
 
 // 리뷰 수정(GET)
 router.get('/emend/:_id', async (req, res) => {
@@ -57,8 +57,7 @@ router.get('/emend/:_id', async (req, res) => {
 });
 
 // 리뷰 수정(POST)
-router.post('/emend/:_id', async (req, res) => {
-  console.log(req.body);
+router.post('/emend', async (req, res) => {
   const data = await mongoDB.postEmendReview(req.body);
   res.send(JSON.stringify(data));
 });
