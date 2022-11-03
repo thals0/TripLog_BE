@@ -38,12 +38,17 @@ const planDB = {
     }
   },
   // get plan
-  getPlan: async ({ userName }) => {
-    console.log(userName);
+  getPlan: async ({ nickName }) => {
+    // console.log(userName);
     const client = await _client;
     const db = client.db('triplog').collection('plans');
-    const data = await db.findOne({ 'state.user': userName });
-    return data;
+    const data = await db.findOne({ nickName: nickName });
+    if (data === null) {
+      const msg = '내 여행 없음';
+      return msg;
+    } else {
+      return data;
+    }
   },
 };
 
