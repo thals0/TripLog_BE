@@ -32,12 +32,12 @@ const checkDB = {
     const client = await _client;
     const db = client.db('triplog').collection('detail');
     const findResult = await db.findOne({
-      'data.contentid': data.contentId,
+      'data.contentid': contentId,
     });
-    console.log(findResult);
+    // console.log(findResult);
     if (findResult) {
       const result = await db.updateOne(
-        { 'data.contentid': data.contentId },
+        { 'data.contentid': contentId },
         { $inc: { view: +1 } }
       );
       if (result.acknowledged) {
@@ -51,7 +51,7 @@ const checkDB = {
         view: 1,
         like: 0,
       });
-      console.log('@', insertRes);
+      // console.log('@', insertRes);
       if (insertRes.acknowledged) {
         return insertRes;
       } else {
