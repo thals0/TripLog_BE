@@ -94,7 +94,7 @@ const usersDB = {
           nickName: registerInfo.nickName,
           password: hash.hashedPassword,
           salt: hash.salt,
-          likes: [],
+          img: '',
         };
         console.log('@', registerUser);
       } else {
