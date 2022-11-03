@@ -140,6 +140,7 @@ const usersDB = {
           result: true,
           email: findID.email,
           nickName: findID.nickName,
+          img: findID.img,
           msg: '로그인 성공! 메인 페이지로 이동 합니다.',
         };
       } else {
