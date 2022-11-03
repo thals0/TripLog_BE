@@ -20,6 +20,7 @@ router.post('/getlikes', async (req, res) => {
 // item 추가
 router.post('/arrlike', async (req, res) => {
   const data = await mongoDB.arrLike(req.body);
+  // console.log('????', req.body);
   res.send(JSON.stringify(data));
 });
 
