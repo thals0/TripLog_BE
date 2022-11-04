@@ -24,6 +24,14 @@ router.post('/:contentId', async (req, res) => {
   res.send(JSON.stringify(data));
 });
 
+// 별점;
+router.post('/incstar/:contentId', async (req, res) => {
+  // console.log('!!!!!!!!!!!', req.body);
+  contentId = req.params.contentId;
+  const msg = await mongoDB.incStar(req.body, contentId);
+  res.send(msg);
+});
+
 // 좋아요 + 1;
 router.post('/inclike/:contentId', async (req, res) => {
   contentId = req.params.contentId;
