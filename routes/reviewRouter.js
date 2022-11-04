@@ -25,6 +25,12 @@ const limits = {
 
 const upload = multer({ storage, limits });
 
+// get all data
+router.get('/', async (req, res) => {
+  const data = await mongoDB.getAlldata();
+  res.send(data);
+});
+
 // 리뷰 요청(GET)
 router.post('/', async (req, res) => {
   const data = await mongoDB.getUserReview(req.body);

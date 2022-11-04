@@ -12,6 +12,14 @@ const reviewDB = {
     return data;
   },
 
+  // 리뷰 전체 요청
+  getAlldata: async () => {
+    const client = await _client;
+    const db = client.db('triplog').collection('reviews');
+    const data = await db.find({}).toArray();
+    return data;
+  },
+
   // 리뷰 요청(GET)
   getReview: async (contentId) => {
     const client = await _client;
